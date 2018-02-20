@@ -28,20 +28,24 @@ MongoClient.connect( 'mongodb://localhost:27017/TodoApp' , (err,db) => {
 
     // find one and delete
 
-    // db.collection('Todos').findOneAndDelete({
-    //     _id:ObjectID('5a8c6a4d6d203b814e214e4c')
-    //     // _id: 123
-    // }).then((res)=>{
-    //     console.log(res);
-    // });
+    /*
+        Below code will be used when we have to delete a document by some field. Most commonly we will delete the document by
+        its id. findOneAndDelete is the method we use here. Just pass the object with the given field.
 
-    db.collection('Todos').find().toArray().then((res)=>{
-        console.log(JSON.stringify(res,undefined,2));
-    },(err)=>{
-        if ( err ){
-            console.log('error-' , err);
-        }
-    })
+        Note:- if we are using _id which is create by mongo then we need to use the ObjectID param as _id is a object
+            and ObjectID will parese it to correct id. If _id is specified by you then no need to use the ObjectID constructor
+            just simple use _id eg - _id:123.
+    */
+
+    db.collection('Todos').findOneAndDelete({
+        _id:ObjectID('5a8c6a4d6d203b814e214e4c')
+        // _id: 123
+    }).then((res)=>{
+        console.log(res);
+    });
+
+
+    
 
     console.log('connected to mongo server');
 });
