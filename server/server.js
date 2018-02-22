@@ -24,19 +24,15 @@ var User = mongoose.model('User',{
 });
 
 
-// var newUser = new User({
-//     email:'test@test.com'
-// });
+var newUser = new User({
+    email:'test@test.com'
+});
 
-// newUser.save().then((data)=>{
-//     console.log(data);
-// },(e)=>{
-//     console.log('error', e );
-// });
-
-
-
-
+newUser.save().then((data)=>{
+    console.log(data);
+},(e)=>{
+    console.log('error', e );
+});
 
 // var Todo = mongoose.model('Todo',{
 //     text:{
