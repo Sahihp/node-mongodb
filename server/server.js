@@ -7,59 +7,30 @@
 
     
 */
+var express = require('express');
+var bodyParser = require('body-parser');
 
-var mongoose = require('mongoose');
+var {mongoose} = require('./db/mongoose');
+var {Todo} = require('./models/Todo');
+var {User} = require('./models/User');
 
-mongoose.Promise = global.Promise;
+var app = express();
 
-mongoose.connect('mongodb://localhost:27017/TodoApp');
+app.use(bodyParser.json());
 
-var User = mongoose.model('User',{
-    email:{
-        type:String,
-        required:true,
-        trim:true,
-        minLength:1
-    }
+app.post( '/todos', ( req , res ) => {
+    console.log(req.body);
+    var todo = new Todo(req.body);
+    todo.save().then((result) => {
+        res.send(result);
+    } , (e) => {
+        res.status(400).send(e);
+    });
 });
 
 
-var newUser = new User({
-    email:'test@test.com'
+app.listen(3000, () => {
+    console.log('Started on port 3000');
 });
-
-newUser.save().then((data)=>{
-    console.log(data);
-},(e)=>{
-    console.log('error', e );
-});
-
-// var Todo = mongoose.model('Todo',{
-//     text:{
-//         type:String,
-//         required:true,
-//         minLength:1,
-//         trim:true
-//     },
-//     completed:{
-//         type:Boolean,
-//         default:false
-//     },
-//     completedAt :{
-//         type:Number,
-//         default: null
-//     }
-// });
-
-// var todo = new Todo({
-//     text:'Check the whitespace  2'
-// });
-
-// todo.save().then((data)=>{
-//     console.log( 'Saved todo- ', data);
-// },(err)=>{
-//     console.log('Unable to save the data.');
-//     console.log(err);
-// });
 
 
